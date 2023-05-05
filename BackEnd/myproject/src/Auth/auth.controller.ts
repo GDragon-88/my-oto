@@ -17,4 +17,6 @@ export class AuthController{
     signUp(@Body() signUpValue:Auth.SignInDTO){
       return this.authService.signIn(signUpValue)
     }
+
+    
 }

@@ -6,7 +6,7 @@ import * as Auth from './DTO/sign.up.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { access } from 'fs';
+
 @Injectable()
 export class AuthService{
     constructor (@InjectRepository(User)
@@ -30,10 +30,10 @@ export class AuthService{
     // login to hompages
 
     async signIn(value:Auth.SignInDTO){
+       try {
         let dataUse = await this.usersRepository.findOneBy({email:value.email})
 
         let hash = await bcrypt.compare(value.password,dataUse.password);
-        console.log(this.configService.get("SECRET_JWT"));
         
         if(hash){
             const payload = {id:dataUse.id,username:dataUse.userName,role:dataUse.role}
@@ -41,9 +41,13 @@ export class AuthService{
             return {
                 "access_token" : await this.jwtService.signAsync(payload , {secret:this.configService.get("SECRET_JWT")})
             }
+        }else {
+             throw new HttpException("account or password error" , HttpStatus.BAD_GATEWAY)
         }
-
-        return hash
+       } catch (error) {
+          return error
+       }
+       
         
     }
 
