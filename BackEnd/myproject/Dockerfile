@@ -1,15 +1,19 @@
-FROM node:18-alphine as build
+FROM node:18
 
-WORKDIR /app
+# Create app directory
+WORKDIR /usr/src/app
 
-COPY package*.json .
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+# Install app dependencies
 RUN npm install
+
+# Bundle app source
 COPY . .
+
+# Creates a "dist" folder with the production build
 RUN npm run build
 
-FROM node:18-alphine 
-WORKDIR /app
-COPY package.json .
-RUN npm install --only=production
-COPY --from=build /app/dist ./dist
-CMD npm run:prod
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]
