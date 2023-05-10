@@ -11,9 +11,8 @@ export class LocalStrategy extends PassportStrategy (Strategy,'local'){
           secretOrKey: configService.get("SECRET_JWT")
         });
       }
-
     async validate (payload: any) {
-        console.log(payload);
+        console.log(payload, "payload");
         if(payload.role===1) {
             return { userId: payload.sub, username: payload.username }
         }
