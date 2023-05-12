@@ -16,6 +16,6 @@ export class User extends BaseEntity {
   phone:number;
   @Column({default:1})
   status:number
-  @Column({default:1})
-  role:number
+  @Column({default:"user"})
+  role:string
 }

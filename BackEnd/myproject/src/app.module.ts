@@ -5,6 +5,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './User/user.entity';
 import { AuthModule } from './Auth/auth.module';
 import { UserModule } from './User/user.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './Auth/Guards/jwt.guard';
+import { HealthCheckerModule } from './health-check/health-checker.module';
 
 @Module({
   imports: [
@@ -18,7 +21,8 @@ import { UserModule } from './User/user.module';
       entities: [User],
       synchronize: true,
     }),
-    AuthModule,UserModule
+    AuthModule,UserModule,HealthCheckerModule
   ],
+  
 })
 export class AppModule {}

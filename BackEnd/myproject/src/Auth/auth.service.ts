@@ -51,6 +51,13 @@ export class AuthService{
         
     }
 
+
+    async validateUserByToken (token) {
+        let data = await this.jwtService.verifyAsync(token,{secret:this.configService.get("SECRET_JWT")})
+
+        return data
+    }
+
     
     
 }
