@@ -17,7 +17,7 @@ import { HealthCheckerModule } from './health-check/health-checker.module';
       port: 3306,
       username: 'root',
       password: 'chien2811',
-      database: 'my_oto',
+      database: 'test_nest',
       entities: [User],
       synchronize: true,
     }),
